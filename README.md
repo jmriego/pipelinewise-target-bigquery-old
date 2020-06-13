@@ -80,8 +80,7 @@ This target doesn not follow the [PipelineWise specification](https://transferwi
 BigQuery does not allow for column renames so a column modification works like this instead:
 
 
-Versioning columns
-''''''''''''''''''
+#### Versioning columns
 
 Target connectors are versioning columns **when data type change is detected** in the source
 table. Versioning columns means that the old column with the old datatype is kept
@@ -111,7 +110,7 @@ data only after the change.
 | text           | text           |                            | 444-ABC                        |
 | text           | text           |                            | 555-DEF                        |
 
-.. warning::
+*warning*
 
   Please note the ``NULL`` values in ``COLUMN_THREE`` and ``COLUMN_THREE__st`` columns.
   **Historical values are not converted to the new data types!**
@@ -124,6 +123,8 @@ data only after the change.
 1. Define environment variables that requires running the tests
 ```
   export GOOGLE_APPLICATION_CREDENTIALS=<credentials-json-file>
+  export TARGET_BIGQUERY_PROJECT=<bigquery project to run your tests on>
+  export TARGET_BIGQUERY_SCHEMA=<temporary schema for running the tests>
 ```
 
 2. Install python dependencies in a virtual env and run nose unit and integration tests
@@ -131,8 +132,7 @@ data only after the change.
   python3 -m venv venv
   . venv/bin/activate
   pip install --upgrade pip
-  pip install .
-  pip install nose
+  pip install -e ".[test]"
 ```
 
 3. To run unit tests:
